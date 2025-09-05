@@ -10,11 +10,10 @@ import org.springframework.stereotype.Service;
 import java.security.Key;
 import java.util.Date;
 import java.util.function.Function;
+import com.taskguard.taskguard.domain.model.User;
 
 @Service
 public class JwtService {
-
-    private final String SECRET_KEY = "MY_SECRET" // or use System.getenv or other method
 
     public String generateToken(User user) {
         return Jwts.builder()
@@ -57,6 +56,8 @@ public class JwtService {
     }
 
     private Key getSignInKey() {
+        // or use System.getenv or other method
+        String SECRET_KEY = "MY_SECRET";
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }
