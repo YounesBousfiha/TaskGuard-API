@@ -9,6 +9,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 @Entity
 @Data
@@ -35,6 +36,9 @@ public class User {
     @NotBlank
     @Size(min = 8, max = 50)
     private String password;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private ArrayList<Task> tasks = new ArrayList<>();
 
     @Column(nullable = false)
     @NotBlank
