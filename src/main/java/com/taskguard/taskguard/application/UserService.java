@@ -33,7 +33,7 @@ public class UserService {
     }
 
 
-    public User Registeruser(User user) {
+    public User registerUser(User user) {
 
         if(userRepository.findByUsername(user.getUsername()).isPresent()) {
             throw new RuntimeException("Username already exists");
@@ -46,7 +46,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public String autheticateUser(String username, String password) {
+    public String authenticateUser(String username, String password) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password)
         );

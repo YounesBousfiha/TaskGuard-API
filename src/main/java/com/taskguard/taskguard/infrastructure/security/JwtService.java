@@ -15,9 +15,9 @@ import com.taskguard.taskguard.domain.model.User;
 @Service
 public class JwtService {
 
-    public String generateToken(User user) {
+    public String generateToken(String username) {
         return Jwts.builder()
-                .setSubject(user.getUsername())
+                .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 1 hour
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
