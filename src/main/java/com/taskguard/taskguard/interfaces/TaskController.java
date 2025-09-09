@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/api/tasks")
 public class TaskController {
 
@@ -22,34 +22,29 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<Task> createTask(@Valid @RequestBody Task task) {
-        Task createdTask = taskService.createTask(task);
-        return ResponseEntity.ok(createdTask);
+    public Task createTask(@Valid @RequestBody Task task) {
+        return taskService.createTask(task);
     }
 
     @GetMapping
-    public ResponseEntity<List<Task>> getAllTasks() {
-        List<Task> tasks = taskService.getAllTasks();
-        return ResponseEntity.ok(tasks);
+    public List<Task> getAllTasks() {
+        return taskService.getAllTasks();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Task> getTaskbyId(@PathVariable Long id) {
+    public Task getTaskbyId(@PathVariable Long id) {
         return taskService.getTaskById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new RuntimeException("Task not Found"));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable Long id, @Valid @RequestBody Task task) {
-        Task updatedTask = taskService.updateTask(id, task);
-        return ResponseEntity.ok(updatedTask);
+    public Task updateTask(@PathVariable Long id, @Valid @RequestBody Task task) {
+        return taskService.updateTask(id, task);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
+    public void deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
-        return ResponseEntity.noContent().build();
     }
 
 }
